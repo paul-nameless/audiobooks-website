@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers Static Assets: serve this repo as a plain static site.
+  // No worker script (no "main"), so Cloudflare just serves the files.
+  "name": "audiobooks-website",
+  "compatibility_date": "2025-06-01",
+  "assets": {
+    "directory": "."
+  }
+}
