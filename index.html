@@ -1,60 +1,439 @@
 <!DOCTYPE html>
-<html  >
+<html lang="en">
 <head>
-  <!-- Site made with Mobirise Website Builder v5.8.4, https://mobirise.com -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Mobirise v5.8.4, mobirise.com">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <meta name="description" content="">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Audiobooks: a private audiobook player for iPhone</title>
+<meta name="description" content="A private audiobook player for iPhone. Play your own MP3 and M4B files, stream from Audiobookshelf or Jellyfin, or turn an EPUB into an audiobook. No ads, no tracking, no subscription." />
+<script>
+  (function () {
+    try {
+      var s = localStorage.getItem('theme');
+      var d = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (d) document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #edeff2;
+    --paper-2: #e4e6ea;
+    --ink: #23262b;
+    --ink-soft: #6c7079;
+    --accent: #5e6169;
+    --accent-deep: #3d4047;
+    --line: rgba(35, 38, 43, 0.13);
+    --card: #f9fafb;
+    --grad-light: linear-gradient(135deg, #d1d4db, #999ca6);
+    --grad-dark: linear-gradient(135deg, #5e6169, #3d4047);
+    --grad-text: linear-gradient(135deg, #5e6169, #3d4047);
+    --header-bg: rgba(237, 239, 242, 0.78);
+    --radius: 18px;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Hanken Grotesk", -apple-system, sans-serif;
+  }
+  :root.dark {
+    --paper: #16171b;
+    --paper-2: #1e2025;
+    --ink: #e9eaee;
+    --ink-soft: #9aa0aa;
+    --accent: #aab0bb;
+    --accent-deep: #c9ced6;
+    --line: rgba(255, 255, 255, 0.10);
+    --card: #212530;
+    --grad-text: linear-gradient(135deg, #e7e9ed, #a9afb9);
+    --header-bg: rgba(22, 23, 27, 0.72);
+  }
+  :root.dark .phone-stage::before { opacity: 0.42; }
+  :root.dark .phone img { outline-color: rgba(255, 255, 255, 0.09); box-shadow: 0 44px 84px -30px rgba(0, 0, 0, 0.6); }
+  .gradtext { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .mark-tile { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--grad-light); box-shadow: 0 2px 7px rgba(35, 38, 43, 0.2); flex: none; }
+  .mark-tile svg { width: 17px; height: 17px; }
+  .mark-tile line { stroke: #fff; stroke-width: 2; stroke-linecap: round; }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <title>Audiobooks</title>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
-  <link rel="stylesheet" href="assets/theme/css/style.css">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400;1,700&display=swap&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400;1,700&display=swap&display=swap"></noscript>
-  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  html { scroll-behavior: smooth; }
 
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
+  /* subtle paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
+  .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    background: var(--header-bg);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  header.scrolled { border-bottom-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 1.35rem; font-weight: 500; letter-spacing: -0.01em; }
+  .brand .hl { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nav-links { display: flex; align-items: center; gap: 34px; font-size: 0.95rem; color: var(--ink-soft); }
+  .nav-links a { transition: color 0.2s ease; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    font-size: 0.9rem; color: var(--accent); font-weight: 600;
+    border: 1px solid var(--accent); padding: 8px 18px; border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--paper); }
+  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease; }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--accent); }
+  .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-toggle .icon-sun { display: none; }
+  :root.dark .theme-toggle .icon-moon { display: none; }
+  :root.dark .theme-toggle .icon-sun { display: block; }
+  @media (max-width: 720px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 40px 0 64px; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: start; }
+  .eyebrow {
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--accent); font-weight: 600; margin-bottom: 22px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(2.7rem, 6vw, 4.4rem); line-height: 1.02;
+    letter-spacing: -0.02em; margin-bottom: 26px;
+  }
+  h1 em { font-style: italic; font-weight: 500; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: 1.18rem; color: var(--ink-soft); max-width: 30ch; margin-bottom: 34px; }
+  .cta-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .btn-store {
+    display: inline-flex; align-items: center; gap: 11px;
+    background: var(--ink); color: var(--paper);
+    padding: 14px 26px 14px 22px; border-radius: 999px;
+    font-size: 1.02rem; font-weight: 600;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .btn-store:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.4); }
+  .btn-store svg { width: 20px; height: 20px; fill: var(--paper); }
+  .badge { display: inline-block; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .badge img { display: block; height: 40px; width: auto; }
+  .badge-lg img { height: 54px; }
+  .badge:hover { transform: translateY(-2px); opacity: 0.88; }
+  .link-arrow { color: var(--ink-soft); font-size: 1rem; transition: color 0.2s ease; }
+  .link-arrow:hover { color: var(--accent); }
+  .trust { margin-top: 26px; font-size: 0.9rem; color: var(--ink-soft); letter-spacing: 0.01em; }
+
+  /* phone */
+  .phone-stage { position: relative; display: flex; justify-content: center; align-self: center; }
+  .phone-stage::before {
+    content: ""; position: absolute; z-index: 0;
+    width: 116%; height: 66%; top: 17%; left: -8%;
+    background: var(--grad-light); border-radius: 50%;
+    filter: blur(72px); opacity: 0.7;
+  }
+  .phone {
+    position: relative; z-index: 1; width: 300px; aspect-ratio: 1260 / 2736;
+  }
+  .phone img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    border-radius: 44px;
+    box-shadow: 0 44px 84px -30px rgba(35, 38, 43, 0.5), 0 4px 14px -6px rgba(35, 38, 43, 0.18);
+    outline: 1px solid rgba(35, 38, 43, 0.07);
+    outline-offset: -1px;
+  }
+
+  /* ---------- sections ---------- */
+  section.band { padding: 88px 0; border-top: 1px solid var(--line); }
+  .section-head { max-width: 34ch; margin-bottom: 54px; }
+  .section-head .eyebrow { margin-bottom: 16px; }
+  h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 3.6vw, 2.7rem); line-height: 1.08; letter-spacing: -0.02em; }
+  .section-head p { color: var(--ink-soft); font-size: 1.1rem; margin-top: 16px; }
+
+  /* pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .pillar h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; margin-bottom: 12px; letter-spacing: -0.01em; }
+  .pillar p { color: var(--ink-soft); font-size: 1rem; }
+  .pillar .mark { width: 34px; height: 34px; margin-bottom: 20px; color: var(--accent); }
+  .pillar .mark svg { width: 100%; height: 100%; stroke: var(--accent); stroke-width: 1.5; fill: none; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .step .num { font-family: var(--serif); font-size: 2.6rem; font-weight: 400; line-height: 1; margin-bottom: 18px; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .step h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+  .step p { color: var(--ink-soft); font-size: 1rem; }
+
+  /* pricing */
+  .pricing-band { background: var(--paper-2); }
+  .price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .price-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 38px 34px; transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -30px rgba(33,28,21,0.45); }
+  .price-card .tag { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink-soft); font-weight: 600; }
+  .price-card h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 500; margin: 10px 0 6px; letter-spacing: -0.01em; }
+  .price-card .amount { font-size: 1.05rem; color: var(--accent); font-weight: 600; margin-bottom: 22px; }
+  .price-card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .price-card li { display: flex; gap: 11px; align-items: flex-start; color: var(--ink-soft); font-size: 0.98rem; }
+  .price-card li::before { content: ""; flex: none; width: 7px; height: 7px; margin-top: 8px; border-radius: 50%; background: var(--accent); }
+  .price-note { margin-top: 30px; font-size: 1rem; color: var(--ink-soft); max-width: 62ch; }
+  .price-note strong { color: var(--ink); font-weight: 600; }
+
+  /* feature grid */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 40px; }
+  .feature { display: flex; gap: 12px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; }
+  .feature b { font-weight: 600; }
+  .feature .dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); transform: translateY(-2px); }
+
+  /* closing */
+  .closing { text-align: center; padding: 104px 0; border-top: 1px solid var(--line); }
+  .closing h2 { max-width: 20ch; margin: 0 auto 34px; }
+  .closing .btn-store { margin: 0 auto; }
+
+  /* footer */
+  footer { background: var(--grad-dark); padding: 22px 0; }
+  .foot { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; color: rgba(255, 255, 255, 0.72); font-size: 0.85rem; }
+  .foot-links { display: flex; gap: 22px; }
+  .foot-links a { transition: color 0.2s ease; }
+  .foot-links a:hover { color: #fff; }
+
+  /* load animation */
+  .reveal { opacity: 0; transform: translateY(16px); animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; } .d3 { animation-delay: 0.25s; }
+  .d4 { animation-delay: 0.35s; } .d5 { animation-delay: 0.5s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; animation: none; }
+    * { transition: none !important; }
+  }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .lead { max-width: none; }
+    .pillars, .steps, .features { grid-template-columns: 1fr; gap: 28px; }
+    .price-cards { grid-template-columns: 1fr; }
+    .hero { padding: 56px 0 48px; }
+    section.band { padding: 64px 0; }
+  }
+</style>
 </head>
 <body>
 
-  <section data-bs-version="5.1" class="header11 cid-tUPHdvhe14" id="header11-1">
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="mark-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="8" x2="16" y2="16"/><line x1="20" y1="10" x2="20" y2="14"/></svg></span><span class="wordmark">Audio<span class="hl">books</span></span></a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#features">Features</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.7 4.7l1.5 1.5M17.8 17.8l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.7 19.3l1.5-1.5M17.8 6.2l1.5-1.5"/></svg>
+      </button>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">Get the app</a>
+    </nav>
+  </div>
+</header>
 
-
-
-
-
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6 image-wrapper">
-                <img class="w-100" src="assets/images/image-3.jpg" alt="Mobirise Website Builder">
-            </div>
-            <div class="col-12 col-md">
-                <div class="text-wrapper text-center">
-                    <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1">
-                        <strong>Audiobooks</strong></h1>
-                    <p class="mbr-text mbr-fonts-style display-7">Isn't it wonderful to listen to audiobooks, whether you're running, walking, or driving, all while immersing yourself in a good book?<br><br>- Automatically keep track of books you've read.<br>- Beautiful themes.<br>- Manage your library by adding and removing files via iTunes or iOS Files app, AirDrop.<br>- Display book covers from image files or embedded audio images.<br>- Resume playback from where you left off.<br></p>
-
-                    <p class="mbr-text">
-                      Contact: hello.snapsync@gmail.com
-
-
-                      </p>
-
-                </div>
-            </div>
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow reveal d1">iPhone · iPad · Mac · Apple Vision Pro</div>
+        <h1 class="reveal d2">A private <em>audiobook</em> player.</h1>
+        <p class="lead reveal d3">Play your own MP3 and M4B files, stream from your Audiobookshelf or Jellyfin server, or turn any EPUB into an audiobook. All on your iPhone.</p>
+        <div class="cta-row reveal d4">
+          <a class="btn-store" href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">
+            <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            Download on the App Store
+          </a>
+          <a class="link-arrow" href="#how">See how it works →</a>
         </div>
+        <p class="trust reveal d4">No ads. No tracking. No subscription.</p>
+      </div>
+      <div class="phone-stage reveal d5">
+        <div class="phone">
+          <img src="assets/screenshot-player.jpg" alt="The Audiobooks player on iPhone showing Alice's Adventures in Wonderland" />
+        </div>
+      </div>
     </div>
   </section>
-  <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>  <script src="assets/smoothscroll/smooth-scroll.js"></script>  <script src="assets/ytplayer/index.js"></script>  <script src="assets/theme/js/script.js"></script>
 
+  <section class="band">
+    <div class="wrap">
+      <div class="pillars">
+        <div class="pillar">
+          <div class="mark"><svg viewBox="0 0 24 24"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4.4" height="7" rx="1.6"/><rect x="16.6" y="13" width="4.4" height="7" rx="1.6"/></svg></div>
+          <h3>Plays your library</h3>
+          <p>Import your own MP3 and M4B files and listen with chapters, bookmarks, a sleep timer, and speeds up to 4x.</p>
+        </div>
+        <div class="pillar">
+          <div class="mark"><svg viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 9.3 3.8 3.8 0 0 1 16.8 18H7z"/></svg></div>
+          <h3>Streams your server</h3>
+          <p>Connect to your own Audiobookshelf or Jellyfin server to stream or download your whole library.</p>
+        </div>
+        <div class="pillar">
+          <div class="mark"><svg viewBox="0 0 24 24"><line x1="4" y1="10" x2="4" y2="14"/><line x1="8.5" y1="7" x2="8.5" y2="17"/><line x1="13" y1="4" x2="13" y2="20"/><line x1="17.5" y1="8" x2="17.5" y2="16"/><line x1="21.5" y1="10.5" x2="21.5" y2="13.5"/></svg></div>
+          <h3>Converts your ebooks</h3>
+          <p>Turn an EPUB into an audiobook with free on-device voices, or premium AI narration when you want it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Turn ebooks into audiobooks</div>
+        <h2>From ebook to audiobook in a few taps.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">01</div>
+          <h3>Add an EPUB</h3>
+          <p>Import from Files or iCloud, or send it over from your browser with Wi-Fi transfer.</p>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <h3>Pick a voice</h3>
+          <p>Free on-device voices, or premium AI voices in many languages. Preview any voice before you commit.</p>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <h3>Listen anywhere</h3>
+          <p>The finished audiobook plays offline, with chapters and your last position saved automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band pricing-band" id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Pricing</div>
+        <h2>The app is free.</h2>
+        <p>The only thing you can pay for is premium AI narration when you convert an ebook. Everything else costs nothing.</p>
+      </div>
+      <div class="price-cards">
+        <div class="price-card">
+          <div class="tag">Built-in voices</div>
+          <h3>Free</h3>
+          <div class="amount">Unlimited, forever</div>
+          <ul>
+            <li>Convert as many books as you like</li>
+            <li>Runs entirely on your device</li>
+            <li>Works offline, no account</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <div class="tag">Premium AI voices</div>
+          <h3>One-time, per book</h3>
+          <div class="amount">Pay only for the books you want</div>
+          <ul>
+            <li>Studio-quality natural narration</li>
+            <li>Many languages to choose from</li>
+            <li>Listen offline once it is made</li>
+          </ul>
+        </div>
+      </div>
+      <p class="price-note"><strong>The free option is genuinely unlimited.</strong> You only pay when you want premium narration on a specific book, and it is always a one-time purchase. There is never a subscription.</p>
+    </div>
+  </section>
+
+  <section class="band" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Everything else it does</div>
+        <h2>A player built for people who love books.</h2>
+      </div>
+      <div class="features">
+        <div class="feature"><span class="dot"></span><span><b>MP3 &amp; M4B</b> playback, no DRM</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Chapters</b> from files or metadata</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Sleep timer,</b> or at chapter end</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Auto timer</b> at your bedtime hours</span></div>
+        <div class="feature"><span class="dot"></span><span><b>0.25x to 4x</b> playback speed</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Custom skip</b> of 15 to 60 seconds</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Seek undo</b> after an accidental skip</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Bookmarks</b> you can return to</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Resumes</b> where you left off</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Share clips</b> up to 60 seconds</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Home screen widgets</b></span></div>
+        <div class="feature"><span class="dot"></span><span><b>Listening stats</b> &amp; history</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Sort &amp; filter</b> your library</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Edit details</b> &amp; custom cover art</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Automatic cover art</b> from files</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Wi-Fi transfer</b> from a browser</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Files, AirDrop</b> &amp; iTunes import</span></div>
+        <div class="feature"><span class="dot"></span><span><b>iCloud backup</b> for your files</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Game controller</b> support</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Siri Shortcuts</b> &amp; automation</span></div>
+        <div class="feature"><span class="dot"></span><span><b>Liquid Glass</b> design</span></div>
+        <div class="feature"><span class="dot"></span><span><b>20 languages</b></span></div>
+        <div class="feature"><span class="dot"></span><span><b>No ads,</b> no tracking</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <a class="btn-store" href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        Download on the App Store
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Audiobooks</span>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('top');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const isDark = root.classList.toggle('dark');
+      try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    });
+  }
+  try {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) root.classList.toggle('dark', e.matches);
+    });
+  } catch (e) {}
+</script>
 
 </body>
 </html>
