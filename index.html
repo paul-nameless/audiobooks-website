@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Audiobooks: a private audiobook player for iPhone</title>
 <meta name="description" content="A private audiobook player for iPhone. Play your own MP3 and M4B files, stream from Audiobookshelf or Jellyfin, or turn an EPUB into an audiobook. No ads, no tracking, no subscription." />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#edeff2" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16171b" />
 <script>
   (function () {
     try {
@@ -53,6 +58,7 @@
   .mark-tile { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--grad-light); box-shadow: 0 2px 7px rgba(35, 38, 43, 0.2); flex: none; }
   .mark-tile svg { width: 17px; height: 17px; }
   .mark-tile line { stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+  .brand-icon { width: 30px; height: 30px; display: block; flex: none; border-radius: 7px; }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -245,7 +251,7 @@
 
 <header id="top">
   <div class="wrap nav">
-    <a class="brand" href="#top"><span class="mark-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="10" x2="4" y2="14"/><line x1="8" y1="7" x2="8" y2="17"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="8" x2="16" y2="16"/><line x1="20" y1="10" x2="20" y2="14"/></svg></span><span class="wordmark">Audio<span class="hl">books</span></span></a>
+    <a class="brand" href="#top"><img class="brand-icon" src="assets/apple-touch-icon.png" width="30" height="30" alt="Audiobooks app icon" /><span class="wordmark">Audio<span class="hl">books</span></span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
