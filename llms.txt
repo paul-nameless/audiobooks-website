@@ -1,0 +1,23 @@
+# Audiobooks
+
+> A private audiobook player for iPhone, iPad, Mac, and Apple Vision Pro. Play your own MP3 and M4B files, stream from an Audiobookshelf or Jellyfin server, or turn an EPUB into an audiobook. No ads, no tracking, no subscription.
+
+The app is free. Built-in on-device voices are unlimited and free. The only optional purchase is premium AI narration when converting an ebook, charged once per book, never a subscription. Developer: Pavlo Klymenko.
+
+## Pages
+
+- [Home](https://audiobooks.paul-nameless.com/): Overview, the three pillars (plays your library, streams your server, converts your ebooks), pricing, and FAQ.
+- [Privacy Policy](https://audiobooks.paul-nameless.com/privacy): What data stays on device and how the optional cloud text-to-speech handles EPUB text.
+- [Terms and Conditions](https://audiobooks.paul-nameless.com/terms): Usage terms, in-app purchases, and cloud processing.
+
+## App
+
+- [Download on the App Store](https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965)
+
+## Key features
+
+- Plays your own MP3 and M4B files with chapters, bookmarks, sleep timer, and 0.25x to 4x speed
+- Streams and downloads from your own Audiobookshelf or Jellyfin server
+- Converts EPUB to audiobook with free on-device voices or premium AI narration in many languages
+- Runs on iPhone, iPad, Mac, and Apple Vision Pro, with widgets, Siri Shortcuts, and game controller support
+- No ads, no tracking, no account, no subscription

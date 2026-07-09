@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://audiobooks.paul-nameless.com/sitemap.xml

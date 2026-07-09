@@ -10,6 +10,96 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#edeff2" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16171b" />
+<link rel="canonical" href="https://audiobooks.paul-nameless.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Audiobooks" />
+<meta property="og:title" content="Audiobooks: a private audiobook player for iPhone" />
+<meta property="og:description" content="Play your own MP3 and M4B files, stream from Audiobookshelf or Jellyfin, or turn an EPUB into an audiobook. No ads, no tracking, no subscription." />
+<meta property="og:url" content="https://audiobooks.paul-nameless.com/" />
+<meta property="og:image" content="https://audiobooks.paul-nameless.com/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Audiobooks: a private audiobook player for iPhone, iPad, Mac, and Apple Vision Pro." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Audiobooks: a private audiobook player for iPhone" />
+<meta name="twitter:description" content="Play your own MP3 and M4B files, stream from Audiobookshelf or Jellyfin, or turn an EPUB into an audiobook. No ads, no tracking, no subscription." />
+<meta name="twitter:image" content="https://audiobooks.paul-nameless.com/assets/og.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://audiobooks.paul-nameless.com/#website",
+      "name": "Audiobooks",
+      "url": "https://audiobooks.paul-nameless.com/",
+      "publisher": { "@id": "https://audiobooks.paul-nameless.com/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://audiobooks.paul-nameless.com/#person",
+      "name": "Pavlo Klymenko"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://audiobooks.paul-nameless.com/#app",
+      "name": "Audiobooks: MP3 & M4B Player",
+      "operatingSystem": "iOS, iPadOS, macOS, visionOS",
+      "applicationCategory": "MultimediaApplication",
+      "description": "A private audiobook player for iPhone. Play your own MP3 and M4B files, stream from Audiobookshelf or Jellyfin, or turn an EPUB into an audiobook. No ads, no tracking, no subscription.",
+      "url": "https://audiobooks.paul-nameless.com/",
+      "downloadUrl": "https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965",
+      "installUrl": "https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965",
+      "image": "https://audiobooks.paul-nameless.com/assets/apple-touch-icon.png",
+      "author": { "@id": "https://audiobooks.paul-nameless.com/#person" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://audiobooks.paul-nameless.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is the Audiobooks app free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "I've been listening to 30 to 50 audiobooks a year since 2008. The app is my hobby, so it's free. Converting ebooks is free too, with on-device voices. If you want to support me, convert a book with premium AI narration instead, paid once per book." }
+        },
+        {
+          "@type": "Question",
+          "name": "What audio formats can it play?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Your own MP3 and M4B files, no DRM. It reads chapters from the file or its metadata and picks up cover art on its own. Every book remembers where you stopped." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I stream from Audiobookshelf or Jellyfin?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Point it at your own Audiobookshelf or Jellyfin server to stream your library or download books for offline listening. Nothing goes through a third party." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it turn an EPUB into an audiobook?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Import an EPUB and convert it with free on-device voices, or premium AI narration when you want better quality. The finished book plays offline with chapters." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the app track me or need an account?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No account, no ads, no tracking. It all runs on your device, and you can back up your files to your own iCloud." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which devices does it work on?",
+          "acceptedAnswer": { "@type": "Answer", "text": "iPhone, iPad, Mac, and Apple Vision Pro. You also get home screen widgets, Siri Shortcuts, and game controller support." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get audiobooks onto my iPhone?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Import from Files, iCloud, or AirDrop, or send them from your browser over Wi-Fi. After that, books play offline with bookmarks, a sleep timer, and speeds up to 4x." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 <script>
   (function () {
     try {
@@ -213,6 +303,11 @@
   .feature b { font-weight: 600; }
   .feature .dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); transform: translateY(-2px); }
 
+  /* faq */
+  .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 48px; }
+  .faq-item h3 { font-family: var(--serif); font-size: 1.18rem; font-weight: 500; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .faq-item p { color: var(--ink-soft); font-size: 1rem; }
+
   /* closing */
   .closing { text-align: center; padding: 104px 0; border-top: 1px solid var(--line); }
   .closing h2 { max-width: 20ch; margin: 0 auto 34px; }
@@ -220,8 +315,11 @@
 
   /* footer */
   footer { background: var(--grad-dark); padding: 22px 0; }
-  .foot { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; color: rgba(255, 255, 255, 0.72); font-size: 0.85rem; }
-  .foot-links { display: flex; gap: 22px; }
+  .foot { display: flex; flex-direction: column; gap: 16px; color: rgba(255, 255, 255, 0.72); font-size: 0.85rem; }
+  .foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .foot-pages { justify-content: center; }
+  .foot-pages a { color: rgba(255, 255, 255, 0.9); }
+  .foot-legal { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
   .foot-links a { transition: color 0.2s ease; }
   .foot-links a:hover { color: #fff; }
 
@@ -240,7 +338,7 @@
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; gap: 48px; }
     .lead { max-width: none; }
-    .pillars, .steps, .features { grid-template-columns: 1fr; gap: 28px; }
+    .pillars, .steps, .features, .faq-list { grid-template-columns: 1fr; gap: 28px; }
     .price-cards { grid-template-columns: 1fr; }
     .hero { padding: 56px 0 48px; }
     section.band { padding: 64px 0; }
@@ -256,6 +354,7 @@
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.7 4.7l1.5 1.5M17.8 17.8l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.7 19.3l1.5-1.5M17.8 6.2l1.5-1.5"/></svg>
@@ -404,6 +503,45 @@
     </div>
   </section>
 
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>Questions, answered.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>Why is the Audiobooks app free?</h3>
+          <p>I've been listening to 30 to 50 audiobooks a year since 2008. The app is my hobby, so it's free. Converting ebooks is free too, with on-device voices. If you want to support me, convert a book with premium AI narration instead, paid once per book.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What audio formats can it play?</h3>
+          <p>Your own MP3 and M4B files, no DRM. It reads chapters from the file or its metadata and picks up cover art on its own. Every book remembers where you stopped.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I stream from Audiobookshelf or Jellyfin?</h3>
+          <p>Yes. Point it at your own Audiobookshelf or Jellyfin server to stream your library or download books for offline listening. Nothing goes through a third party.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can it turn an EPUB into an audiobook?</h3>
+          <p>Yes. Import an EPUB and convert it with free on-device voices, or premium AI narration when you want better quality. The finished book plays offline with chapters.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does the app track me or need an account?</h3>
+          <p>No account, no ads, no tracking. It all runs on your device, and you can back up your files to your own iCloud.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Which devices does it work on?</h3>
+          <p>iPhone, iPad, Mac, and Apple Vision Pro. You also get home screen widgets, Siri Shortcuts, and game controller support.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I get audiobooks onto my iPhone?</h3>
+          <p>Import from Files, iCloud, or AirDrop, or send them from your browser over Wi-Fi. After that, books play offline with bookmarks, a sleep timer, and speeds up to 4x.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="closing">
     <div class="wrap">
       <a class="btn-store" href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">
@@ -416,7 +554,22 @@
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 Audiobooks</span>
+    <nav class="foot-links foot-pages">
+      <a href="m4b-player.html">M4B player</a>
+      <a href="mp3-audiobook-player.html">MP3 player</a>
+      <a href="audiobookshelf-ios-app.html">Audiobookshelf</a>
+      <a href="jellyfin-audiobook-player.html">Jellyfin</a>
+      <a href="convert-epub-to-audiobook.html">EPUB to audiobook</a>
+      <a href="alternatives/audible.html">Audible alternative</a>
+    </nav>
+    <div class="foot-legal">
+      <span>© 2026 Audiobooks - MP3 &amp; M4B Player</span>
+      <nav class="foot-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">App Store</a>
+      </nav>
+    </div>
   </div>
 </footer>
 
