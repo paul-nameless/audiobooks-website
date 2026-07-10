@@ -6,6 +6,9 @@
     <title>Privacy Policy - Audiobooks</title>
     <link rel="canonical" href="https://audiobooks.paul-nameless.com/privacy" />
     <meta name="robots" content="index, follow" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16171b" />
+    <script>(function(){var m='system';try{var s=localStorage.getItem('theme');if(s==='light'||s==='dark')m=s;}catch(e){}try{if(m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');}catch(e){}})();</script>
     <style>
         body { font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #333; }
         h1 { font-size: 24px; }
@@ -13,6 +16,12 @@
         p.meta { color: #666; font-size: 14px; margin: 2px 0; }
         ul { padding-left: 20px; }
         hr { border: none; border-top: 1px solid #ddd; margin: 30px 0; }
+        :root.dark { background: #16171b; }
+        :root.dark body { background: #16171b; color: #c9ced6; }
+        :root.dark h1, :root.dark h2 { color: #e9eaee; }
+        :root.dark p.meta { color: #9aa0aa; }
+        :root.dark a { color: #aab0bb; }
+        :root.dark hr { border-top-color: rgba(255, 255, 255, 0.12); }
     </style>
 </head>
 <body>
@@ -109,5 +118,6 @@
 <p>If you have any questions about this Privacy Policy, contact us at:<br>
 hello.snapsync+audiobooks@gmail.com</p>
 
+<script>try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){var s;try{s=localStorage.getItem('theme');}catch(_){}if(s!=='light'&&s!=='dark')document.documentElement.classList.toggle('dark',e.matches);});}catch(e){}</script>
 </body>
 </html>

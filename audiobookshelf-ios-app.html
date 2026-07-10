@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://audiobooks.paul-nameless.com/assets/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://audiobooks.paul-nameless.com/assets/og.png" />
-<script>(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<script>(function(){var r=document.documentElement,m='system';try{var s=localStorage.getItem('theme');if(s==='light'||s==='dark')m=s;}catch(e){}r.setAttribute('data-theme-mode',m);try{if(m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme: dark)').matches))r.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -52,9 +52,10 @@
   <div class="nav">
     <a class="brand" href="index.html"><img src="assets/apple-touch-icon.png" width="28" height="28" alt="Audiobooks app icon" /><span>Audio<span class="hl">books</span></span></a>
     <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
-        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Change theme: light, dark, or system">
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.7 4.7l1.5 1.5M17.8 17.8l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.7 19.3l1.5-1.5M17.8 6.2l1.5-1.5"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="icon-monitor" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></svg>
       </button>
       <a class="nav-cta" href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">Get the app</a>
     </div>
@@ -133,8 +134,17 @@
 </footer>
 
 <script>
-  var t = document.getElementById('themeToggle');
-  if (t) t.addEventListener('click', function () { var d = document.documentElement.classList.toggle('dark'); try { localStorage.setItem('theme', d ? 'dark' : 'light'); } catch (e) {} });
+  (function () {
+    var r = document.documentElement, mq = window.matchMedia('(prefers-color-scheme: dark)'), modes = ['system', 'light', 'dark'];
+    function apply(m) { r.setAttribute('data-theme-mode', m); r.classList.toggle('dark', m === 'dark' || (m === 'system' && mq.matches)); }
+    var t = document.getElementById('themeToggle');
+    if (t) t.addEventListener('click', function () {
+      var next = modes[(modes.indexOf(r.getAttribute('data-theme-mode') || 'system') + 1) % 3];
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      apply(next);
+    });
+    try { mq.addEventListener('change', function () { if ((r.getAttribute('data-theme-mode') || 'system') === 'system') apply('system'); }); } catch (e) {}
+  })();
 </script>
 </body>
 </html>

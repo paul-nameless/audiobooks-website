@@ -102,11 +102,10 @@
 </script>
 <script>
   (function () {
-    try {
-      var s = localStorage.getItem('theme');
-      var d = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (d) document.documentElement.classList.add('dark');
-    } catch (e) {}
+    var r = document.documentElement, m = 'system';
+    try { var s = localStorage.getItem('theme'); if (s === 'light' || s === 'dark') m = s; } catch (e) {}
+    r.setAttribute('data-theme-mode', m);
+    try { if (m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)) r.classList.add('dark'); } catch (e) {}
   })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -204,9 +203,10 @@
   .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease; }
   .theme-toggle:hover { color: var(--ink); border-color: var(--accent); }
   .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-  .theme-toggle .icon-sun { display: none; }
-  :root.dark .theme-toggle .icon-moon { display: none; }
-  :root.dark .theme-toggle .icon-sun { display: block; }
+  .theme-toggle .icon-sun, .theme-toggle .icon-moon, .theme-toggle .icon-monitor { display: none; }
+  :root[data-theme-mode="light"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme-mode="dark"] .theme-toggle .icon-moon { display: block; }
+  :root[data-theme-mode="system"] .theme-toggle .icon-monitor { display: block; }
   @media (max-width: 720px) { .nav-links a:not(.nav-cta) { display: none; } }
 
   /* ---------- hero ---------- */
@@ -355,9 +355,10 @@
       <a href="#pricing">Pricing</a>
       <a href="#features">Features</a>
       <a href="#faq">FAQ</a>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
-        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Change theme: light, dark, or system">
         <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.7 4.7l1.5 1.5M17.8 17.8l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.7 19.3l1.5-1.5M17.8 6.2l1.5-1.5"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="icon-monitor" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></svg>
       </button>
       <a class="nav-cta" href="https://apps.apple.com/us/app/audiobooks-mp3-m4b-player/id6471399965">Get the app</a>
     </nav>
@@ -580,16 +581,20 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   const root = document.documentElement;
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const applyTheme = (m) => { root.setAttribute('data-theme-mode', m); root.classList.toggle('dark', m === 'dark' || (m === 'system' && mq.matches)); };
   const themeToggle = document.getElementById('themeToggle');
   if (themeToggle) {
+    const modes = ['system', 'light', 'dark'];
     themeToggle.addEventListener('click', () => {
-      const isDark = root.classList.toggle('dark');
-      try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
+      const next = modes[(modes.indexOf(root.getAttribute('data-theme-mode') || 'system') + 1) % 3];
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      applyTheme(next);
     });
   }
   try {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) root.classList.toggle('dark', e.matches);
+    mq.addEventListener('change', () => {
+      if ((root.getAttribute('data-theme-mode') || 'system') === 'system') applyTheme('system');
     });
   } catch (e) {}
 </script>
